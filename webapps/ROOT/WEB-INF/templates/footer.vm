@@ -1,0 +1,40 @@
+
+  </div>
+</main> 
+#set ($has_text = false)
+    <div id="footer">
+#if ($sparql_endpoint)
+      This page shows information obtained from the SPARQL endpoint at <a class="sparql-uri" href="http://localhost:3030/sparql.html" target="_blank">$sparql_endpoint</a>.<br />
+#end
+#if ($rdf_link)
+      <a href="$rdf_link?output=ttl">As Turtle</a> |
+      <a href="$rdf_link?output=xml">As RDF/XML</a>
+#set ($has_text = true)
+#end
+#if ($disco_link)
+#if ($has_text)
+      |
+#end
+      <a href="$disco_link">Browse in Disco</a>
+#set ($has_text = true)
+#end
+#if ($tabulator_link)
+#if ($has_text)
+      |
+#end
+      <a href="$tabulator_link">Browse in Tabulator</a>
+#set ($has_text = true)
+#end
+#if ($openlink_link)
+#if ($has_text)
+      |
+#end
+      <a href="$openlink_link">Browse in OpenLink Browser</a>
+#set ($has_text = true)
+#end
+    </div>
+    <h5 style="font-size: 14px">Development & Designed By : <a href="https://scholar.google.com/citations?user=efwwFCAAAAAJ&hl=en&oi=ao" target="_blank">Treepidok Ngootip</a></h5>
+    <h5><a href="https://www.facebook.com/mob1935" target="_blank" style="" title="Facebook profile"><img src="${server_base}static/logoface.png" height="25px"></a><a href="https://line.me/ti/p/JE-8pe1-fW" target="_blank" style="margin-left : 5px;" title="Add line id mob1935"><img src="${server_base}static/logoline.png" height="25px"></a><a href="https://scholar.google.com/citations?user=efwwFCAAAAAJ&hl=th&oi=ao" target="_blank" style="margin-left : 5px;" title="Goosle Scholar"><img src="${server_base}static/logoscholar.png" height="25px"></a><a href="https://www.scopus.com/authid/detail.uri?authorId=57225218638" target="_blank" style="margin-left : 5px;" title="Scopus"><img src="${server_base}static/logoscopus.png" height="25px"></a></h5>
+    <br>
+  </body>
+</html>

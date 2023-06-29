@@ -1,0 +1,85 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <link rel="stylesheet" href="${server_base}static/bootstrap-4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="${server_base}static/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="${server_base}static/popper1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="${server_base}static/bootstrap-4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <title>$title | $project_name</title>
+    <link rel="icon" href="${server_base}static/lod-icon.png">
+#if ($rdf_link)
+    <link rel="alternate" type="application/rdf+xml" href="$rdf_link" title="RDF" />
+#end
+    <link rel="stylesheet" type="text/css" href="${server_base}static/style.css" />
+    <script type="text/javascript" src="${server_base}static/script.js"></script>
+   <link href="${server_base}static/style1.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
+  </head>
+  <body class="d-flex flex-column h-100" onLoad="init();">
+     <header>
+  <!-- Fixed navbar -->
+<nav class="navbar navbar-expand-md navbar-light rounded fixed-top" style="
+    background-color: #DEDEDE;
+">
+    <a class="navbar-brand" href="$project_link">$project_name</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item" hidden>
+          <a class="nav-link disabled" href="$project_link" tabindex="-1" aria-disabled="true">$project_name</a>
+        </li>
+      </ul>
+      <form class="form-inline mt-2 mt-md-0">
+        <div class="row-fluid">
+          <select id="search" class="selectpicker" data-show-subtext="true" data-live-search="true" onchange="window.location.href=this.value;">
+            <option value="">Search</option>
+
+            <script>
+              var xhttp1 = new XMLHttpRequest();
+              xhttp1.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                  let str1 = this.responseText;
+                  let newStr1 = str1.replace("uri,title", "");
+                  let newStr11 = newStr1.replace(/http/g, ",,http");
+                  var strArray1 = newStr11.split(",,");
+                  let newStr12 = "";
+                  
+                  // Display array values on page
+                  for(var i = 0; i < strArray1.length; i++){
+                      var strArray11 = strArray1[i].split(",");
+                      for(var x = 1; x < strArray11.length; x++){
+                        var option = "<option value='" + strArray11[0] + "'>" +  strArray11[1]  + "</option>"
+                        document.getElementById('search').innerHTML += option;
+                      }
+                  }
+                }
+              };
+              xhttp1.open("GET", "http://localhost:3030/sparql?query=%23%23+prefix+standard%0D%0APREFIX+folktale%3A+%3Chttp%3A%2F%2Fwww.hozo.jp%2Fowl%2FFolktale.owl%23%3E%0D%0APREFIX+fn%3A+%3Chttp%3A%2F%2Fxmlns.com%2Ffoaf%2F0.1%2Fname%3E++%0D%0APREFIX+sa%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2002%2F07%2Fowl%23sameAs%3E+%0D%0A%0D%0A%23%23+Query+all+title+with+uri%0D%0APREFIX+folktale%3A+%3Chttp%3A%2F%2Fwww.hozo.jp%2Fowl%2FFolktale.owl%23%3E%0D%0APREFIX+fn%3A+%3Chttp%3A%2F%2Fxmlns.com%2Ffoaf%2F0.1%2Fname%3E++%0D%0APREFIX+sa%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2002%2F07%2Fowl%23sameAs%3E+%0D%0ASELECT+%3Furi+%3Ftitle%0D%0AWHERE%0D%0A%7B+%3Furi+fn%3A+%3Ftitle+%7D%0D%0AORDER+BY+ASC%28%3Furi%29&default-graph-uri=http%3A%2F%2Flocalhost%3A3030%2Ffolktalegms-202301.ttl&output=csv&stylesheet=&force-accept=text%2Fplain", true);
+              xhttp1.send();
+            </script>
+
+          </select>
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+      </form>
+    </div>
+  </nav>
+</header>
+
+<!-- Begin page content -->
+<main role="main" class="flex-shrink-0" style="padding-top: 85px;">
+  
+  <div class="container">
+  <div class="three">
+  <h1 id="title"><a href="$uri"  style="color: #000;text-decoration:none">$title</a></h1>
+</div>
+#if ($rdf_link)
+      <!-- <div id="rdficon"><a href="$rdf_link" title="RDF data"><img src="${server_base}static/rdf-icon.gif" alt="[This page as RDF]" /></a></div> -->
+#end
+#if ($back_uri)
+	<p><a href="$back_uri">Back to $back_label</a></p>
+#end
